@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html data-ng-app="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Protractor</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="css/normalize.min.css">
+		<link rel="stylesheet" href="css/main.css">
+
+	</head>
+	<body>
+		
+		<div class="main" data-ng-controller="CanvasController">
+			<h1>Protractor</h1>
+			center: {{protractor.origin.x}} {{protractor.origin.y}} <br>
+			v1: {{protractor.v1.x}} {{protractor.v1.y}} <br>
+			v2: {{protractor.v2.x}} {{protractor.v2.y}} <br>
+			angleDegrees: {{protractor.angleDegrees}} <br>
+			angleRadians: {{protractor.angleRadians}} <br>
+			<br>
+			<canvas id="main-canvas" class="main-canvas" width="700" height="400">
+			</canvas>
+
+		</div>
+
+		<script src="js/angular.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/protractor.js"></script>
+		<script src="js/main.js"></script>
+
+	</body>
+</html>

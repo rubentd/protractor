@@ -1,0 +1,11 @@
+body{
+    font-style: 'Helvetica Neue', 'Arial', 'sans serif';
+}
+
+.main{
+    padding:20px;
+}
+
+.main-canvas{
+    border:1px dashed #999;
+}
