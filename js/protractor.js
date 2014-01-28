@@ -66,6 +66,8 @@ function CanvasController($scope){
 		cc.updateMouse(e);
 		cc.protractor.set();
 		cc.protractor.update(cc.mouseX, cc.mouseY);
+		cc.updateCanvas();
+		$scope.$apply();
 	});
 	this.canvas.mousemove(function(e){
 		cc.updateMouse(e);
@@ -134,5 +136,5 @@ CanvasController.prototype={
 }
 
 function distanceBetween(x0, y0, x1, y1){
-	
+
 }
