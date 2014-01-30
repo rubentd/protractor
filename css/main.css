@@ -4,8 +4,164 @@ body{
 
 .main{
     padding:20px;
+    -webkit-perspective:800px;
+}
+
+h1{
+	margin-bottom:0;
 }
 
 .main-canvas{
-    border:1px dashed #999;
+    border:1px solid #ddd;
+}
+
+.protractor-tool{
+	display:block;
+	box-shadow: 0px 0px 30px #85A6AB;
+	width:200px;
+	height:200px;
+	border-radius: 200px;
+	position:absolute;
+	top:229px;
+	left:281px;
+	opacity:.5;
+	pointer-events:none;
+	-webkit-transition:all .5s;
+	-webkit-transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.protractor-canvas{
+	position:absolute;
+	top:0;
+	left:0;
+	opacity:.8;
+}
+
+.protractor-tool-inner{
+	width:200px;
+	height:200px;
+	border-radius: 200px;
+	background-color:#A8E5ED;
+	border:1px solid #6e8a9e;
+	box-shadow: inset 0px 0px 7px #fff;
+}
+
+.protractor-tool-inner:after{
+	content:' ';
+	display:block;
+	width:140px;
+	height:140px;
+	margin:28px;
+	border-radius: 100px;
+	border:1px solid #6e8a9e;
+	background-color:#E8F8FA;
+}
+
+.protractor-tool-inner:before{
+	width:1px;
+	height:20px;
+	display:inline-block;
+	position:absolute;
+	bottom:0px;
+	left:99px;
+	border-right:1px solid navy;
+	content:'';
+	padding:0;
+}
+
+.menu{
+	background-color:#E8F8FA;
+	display:block;
+	opacity:.5;
+}
+
+.menu:hover{
+	opacity:1;
+}
+
+.menu label{
+	font-size:14px;
+	width:100%;
+	text-align: center;
+}
+
+.set-rotation{
+	position:absolute;
+	top:300px;
+	left:80px;
+	padding:5px;
+	display:inline-block;
+}
+
+.set-rotation input{
+	width:45px;
+}
+
+.set-rotation label{
+	display:inline-block;
+	width:40px;
+}
+
+.protractor-options{
+	position:absolute;
+	top:120px;
+	left:80px;
+	cursor:pointer;
+	padding:10px;
+}
+
+.protractor-options ul{
+	padding:0;
+	margin:0;
+	float:left;
+	margin-left:10px;
+}
+
+.protractor-options li{
+	list-style-type:none;
+	padding:4px 10px;
+	border-radius:3px;
+}
+
+.protractor-options li:hover{
+	background-color:#C7EDF2; 
+}
+
+.protractor-options li.selected{
+	background-color:#0F3A4F;
+	color:#fff;
+}
+
+.protractor-options img{
+	float:left;
+}
+
+.protractor-slider-knob{
+	width: 30px;
+	height: 30px;
+	border-radius:30px;
+	position: absolute;
+	top: -13px;
+	margin-left: -15px;
+	z-index: 200;
+	background-color: #85A6AB;
+	cursor:pointer;
+	background-color: #E8F8FA;
+	border: 1px solid #6e8a9e;
+	box-shadow: inset 0px 0px 7px #fff;
+}
+
+.protractor-slider{
+	position: absolute;
+	top: 500px;
+	left:-120px;
+	width: 377px;
+	height: 5px;
+	text-align: center;
+	margin: 0 314px;
+	background-color:#ddd;
+}
+
+.protractor-angle{
+	margin-top:20px;
 }

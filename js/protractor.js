@@ -1,42 +1,24 @@
 /*
  * Protractor tool
  */
+var INITIAL_X=362;
+var INITIAL_Y=234;
+
 function Protractor(){
-	/*
-	 * 0 = not initialized, 
-	 * 1 = center drawed
-	 * 2 = center + v1
-	 * 3 = center + v1 + v2
-	 */
-	this.state = 0;
-	this.origin = {x:'-', y:'-', visible:true};
-	this.v1 = {x:'-', y:'-', visible:false};
-	this.v2 = {x:'-', y:'-', visible:false};
-	this.angleDegrees='-';
-	this.angleRadians='-';
+
+	this.origin = {x:INITIAL_X, y:INITIAL_Y, visible:true};
+	this.tool=$("#protractor-tool");
+	this.canvas=$("#protractor-canvas");
+	this.context=this.canvas[0].getContext('2d');
+
+	this.setInputRotation();
+
+	this.angleDegrees=0;
+	this.angleRadians=0;
+
 }
 
 Protractor.prototype = {
-	update: function(mx, my){
-		switch(this.state){
-			case 0:
-				this.origin.x=mx;
-				this.origin.y=my;
-				break;
-			case 1:
-				this.v1.visible=true;
-				this.v1.x=mx;
-				this.v1.y=my;
-				break;
-			case 2:
-				this.v2.visible=true;
-				this.v2.x=mx;
-				this.v2.y=my;
-				break;
-			case 3:
-				break;
-		}
-	},
 	set: function(){
 		if(this.state<3){
 			this.state++;
@@ -45,6 +27,37 @@ Protractor.prototype = {
 			this.v2.visible=false;
 			this.state=0;
 		}		
+	},
+
+	setRotation: function(x, y, z){
+		this.tool.css("-webkit-transform", "rotateX(" + x + "deg) rotateY(" + y + "deg) rotateZ(" + z + "deg)");
+	},
+
+	updateAngle: function(){
+		this.angleDegrees = $("#protractor-angle").val();
+		$('#protractor-slider-knob').css('left',  this.angleDegrees + 'px');
+		this.angleRadians=this.angleDegrees*Math.PI/180;
+	},
+
+	setInputRotation: function(){
+		var xRot = parseInt($("#rot-x").val());
+		var yRot = parseInt($("#rot-y").val());
+		var zRot = parseInt($("#rot-z").val());
+		this.setRotation(xRot, yRot, zRot);
+	},
+
+	drawArc: function(){
+		var radius = 85;
+		var x= this.canvas.width()/2;
+		var y= this.canvas.height()/2;
+		var startAngle = 0 + 0.5*Math.PI;
+		var endAngle = this.angleRadians + 0.5*Math.PI;
+		var counterClockwise = false;
+		this.context.beginPath();
+		this.context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+		this.context.lineWidth = 15;
+		this.context.strokeStyle = 'orange';
+		this.context.stroke();
 	}
 }
 
@@ -55,64 +68,57 @@ function CanvasController($scope){
 	var canv=$("#main-canvas");
 	this.canvas=canv;
 	this.context=this.canvas[0].getContext('2d');
-	this.protractor = new Protractor(cc);
-	this.mouseX=0;
-	this.mouseY=0;
-	$scope.protractor=this.protractor;
 
-	//As it is the only tool available, every click will trigger protractor
 	var cc=this;
-	this.canvas.click(function(e){
-		cc.updateMouse(e);
-		cc.protractor.set();
-		cc.protractor.update(cc.mouseX, cc.mouseY);
+	$(document).ready( function(){
+		cc.protractor = new Protractor(cc);
+		cc.mouseX=0;
+		cc.mouseY=0;
 		cc.updateCanvas();
+		$scope.protractor=this.protractor;
 		$scope.$apply();
-	});
-	this.canvas.mousemove(function(e){
-		cc.updateMouse(e);
-		cc.protractor.update(cc.mouseX, cc.mouseY);
-		cc.updateCanvas();
-		$scope.$apply();
+		cc.setEvents();
 	});
 }
 
 CanvasController.prototype={
 
-	updateMouse: function(e){
-		this.mouseX=e.clientX - this.canvas[0].offsetLeft;;
-		this.mouseY=e.clientY - this.canvas[0].offsetTop;;
-	},
-
 	updateCanvas: function(){
-		this.context.clearRect(0, 0, 700, 400);
-		//draw elements
-		this.drawProtractor();
+		console.log(this.protractor.angleDegrees);
+		console.log(this.protractor.angleRadians);
+		this.context.clearRect(0, 0, 700, 500);
+		this.protractor.context.clearRect(0, 0, 300, 300);
+		this.protractor.drawArc();
 	},
 
-	drawProtractor: function(){
-		if(this.protractor.origin.visible){
-			//Draw center
-			this.drawPoint('#00f72d', this.protractor.origin.x, this.protractor.origin.y, 5);
-		}
-		if(this.protractor.v1.visible){
-			//Draw v1
-			this.drawPoint('#00f72d', this.protractor.v1.x, this.protractor.v1.y, 5);
-		}
-		if(this.protractor.v2.visible){
-			//Draw v2
-			this.drawPoint('#00f72d', this.protractor.v2.x, this.protractor.v2.y, 5);
-		}
-		if(this.protractor.v1.visible){
-			//Draw line1
-			this.drawDashedLine(this.protractor.origin.x, this.protractor.origin.y, 
-				this.protractor.v1.x, this.protractor.v1.y, 2);
-		}
-		if(this.protractor.v2.visible){
-			//Draw line2
-			this.drawDashedLine(this.protractor.origin.x, this.protractor.origin.y, 
-				this.protractor.v2.x, this.protractor.v2.y, 2);
-		}
+	setEvents: function(){
+		var cc=this;
+		var prot=this.protractor;
+		$("input").keydown(function(){
+			prot.setInputRotation();
+		});
+		$("input").keyup(function(){
+			prot.setInputRotation();
+		});
+		$("input").blur(function(){
+			prot.setInputRotation();
+		});
+		$("#protractor-angle").keyup(function(){
+			prot.updateAngle();
+		});
+		$("#protractor-angle").keydown(function(){
+			prot.updateAngle();
+		});
+		$('#protractor-slider-knob').draggable({ 
+			axis: 'x', 
+			containment: "parent",
+			drag: function(){
+				var degrees = parseInt($(this).css('left').replace('px',''));
+				$("#protractor-angle").val(degrees);
+				prot.updateAngle();
+				cc.updateCanvas();
+			}
+		});
 	},
 
 	drawPoint: function(color, x, y, radius){
@@ -135,6 +141,3 @@ CanvasController.prototype={
 	}
 }
 
-function distanceBetween(x0, y0, x1, y1){
-
-}

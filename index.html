@@ -8,26 +8,47 @@
 		<meta name="viewport" content="width=device-width">
 
 		<link rel="stylesheet" href="css/normalize.min.css">
+		<link rel="stylesheet" href="css/jquery-ui.min.css">
 		<link rel="stylesheet" href="css/main.css">
 
 	</head>
 	<body>
-		
-		<div class="main" data-ng-controller="CanvasController">
+		<div id="main" class="main" data-ng-controller="CanvasController">
 			<h1>Protractor</h1>
-			center: {{protractor.origin.x}} {{protractor.origin.y}} <br>
-			v1: {{protractor.v1.x}} {{protractor.v1.y}} <br>
-			v2: {{protractor.v2.x}} {{protractor.v2.y}} <br>
-			angleDegrees: {{protractor.angleDegrees}} <br>
-			angleRadians: {{protractor.angleRadians}} <br>
-			<br>
-			<canvas id="main-canvas" class="main-canvas" width="700" height="400">
+			<canvas id="main-canvas" class="main-canvas" width="700" height="500">				
 			</canvas>
 
+			<div id="protractor-tool" class="protractor-tool xy">
+				<div class="protractor-tool-inner">
+				</div>
+				<canvas id ="protractor-canvas" class="protractor-canvas" width="200" height="200"></canvas>
+			</div>
+			<!--div class="menu protractor-options">
+				<label>Rotation Axis</label><br>
+				<img src="img/axis.png" />
+				<ul>
+					<li data-plane='yz'>X</li>
+					<li data-plane='xz'>Y</li>
+					<li data-plane='xy' class="selected">Z</li>
+				</ul>
+			</div-->
+			<div id="protractor-slider" class="protractor-slider">
+				<div id="protractor-slider-knob" class="protractor-slider-knob"></div>
+				<input id="protractor-angle" class="protractor-angle" type="number" width="50px" min="0" max="360" value="0">
+			</div>
+
+			<div class="menu set-rotation">
+				<label>x:</label> <input type="number" min="-360" max="360" id="rot-x" value="0"><br>
+				<label>y:</label> <input type="number" min="-360" max="360" id="rot-y" value="0"><br>
+				<label>z:</label> <input type="number" min="-360" max="360" id="rot-z" value="0"><br>
+			</div>
+
 		</div>
+		
 
 		<script src="js/angular.min.js"></script>
 		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
 		<script src="js/protractor.js"></script>
 		<script src="js/main.js"></script>
 
