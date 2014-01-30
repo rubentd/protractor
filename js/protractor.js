@@ -36,6 +36,7 @@ Protractor.prototype = {
 	updateAngle: function(){
 		this.angleDegrees = $("#protractor-angle").val();
 		$('#protractor-slider-knob').css('left',  this.angleDegrees + 'px');
+		$("#protractor-angle-center").html(this.angleDegrees + '&deg;');
 		this.angleRadians=this.angleDegrees*Math.PI/180;
 	},
 

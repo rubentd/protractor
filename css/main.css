@@ -46,8 +46,10 @@ h1{
 	box-shadow: inset 0px 0px 7px #fff;
 }
 
-.protractor-tool-inner:after{
-	content:' ';
+.protractor-tool-inner .number{
+	font-size:50px;
+	line-height: 140px;
+	text-align:center;
 	display:block;
 	width:140px;
 	height:140px;
