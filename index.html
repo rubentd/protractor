@@ -15,12 +15,12 @@
 	<body>
 		<div id="main" class="main" data-ng-controller="CanvasController">
 			<h1>Protractor</h1>
-			<canvas id="main-canvas" class="main-canvas" width="700" height="500">				
-			</canvas>
 
 			<div id="protractor-tool" class="protractor-tool xy">
 				<div class="protractor-tool-inner">
-					<div id="protractor-angle-center" class="number">0&deg;</div>
+					<div id="protractor-angle-center" class="number" data-rad="0" data-deg="0">
+						0&deg;
+					</div>
 				</div>
 				<canvas id ="protractor-canvas" class="protractor-canvas" width="200" height="200"></canvas>
 			</div>
@@ -35,13 +35,17 @@
 			</div-->
 			<div id="protractor-slider" class="protractor-slider">
 				<div id="protractor-slider-knob" class="protractor-slider-knob"></div>
-				<input id="protractor-angle" class="protractor-angle" type="number" width="50px" min="0" max="360" value="0">
+				<input id="protractor-angle" class="protractor-angle" type="number"width="50px" min="0" max="360" value="0" data-deg="0" data-rad="0">
 			</div>
 
 			<div class="menu set-rotation">
 				<label>x:</label> <input type="number" min="-360" max="360" id="rot-x" value="0"><br>
 				<label>y:</label> <input type="number" min="-360" max="360" id="rot-y" value="0"><br>
 				<label>z:</label> <input type="number" min="-360" max="360" id="rot-z" value="0"><br>
+				<select id="angle-unit">
+					<option value="deg">Degrees</option>
+					<option value="rad">Radians</option>
+				</select>
 			</div>
 
 		</div>

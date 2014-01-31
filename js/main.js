@@ -6,7 +6,9 @@ $(document).ready( function(){
 		var orientation = $(this).attr('data-plane');			
 	});
 
-	$('#protractor-tool').draggable();
+	$('#protractor-tool').draggable({
+		containment: "parent"
+	});
 	
 });
 

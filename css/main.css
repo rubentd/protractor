@@ -1,5 +1,6 @@
 body{
     font-style: 'Helvetica Neue', 'Arial', 'sans serif';
+    background-color:#C5DEE3;
 }
 
 .main{
@@ -12,7 +13,7 @@ h1{
 }
 
 .main-canvas{
-    border:1px solid #ddd;
+    
 }
 
 .protractor-tool{
@@ -22,11 +23,10 @@ h1{
 	height:200px;
 	border-radius: 200px;
 	position:absolute;
-	top:229px;
-	left:281px;
+	top:150px;
+	left:320px;
 	opacity:.5;
-	pointer-events:none;
-	-webkit-transition:all .5s;
+	-webkit-transition:-webkit-transform .5s;
 	-webkit-transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg);
 }
 
@@ -35,19 +35,21 @@ h1{
 	top:0;
 	left:0;
 	opacity:.8;
+	pointer-events:none;
 }
 
 .protractor-tool-inner{
 	width:200px;
 	height:200px;
 	border-radius: 200px;
-	background-color:#A8E5ED;
+	background-color:#AEDDEB;
 	border:1px solid #6e8a9e;
 	box-shadow: inset 0px 0px 7px #fff;
+	cursor:move;
 }
 
 .protractor-tool-inner .number{
-	font-size:50px;
+	font-size:45px;
 	line-height: 140px;
 	text-align:center;
 	display:block;
@@ -57,16 +59,17 @@ h1{
 	border-radius: 100px;
 	border:1px solid #6e8a9e;
 	background-color:#E8F8FA;
+	box-shadow: 0px 0px 30px #fff;
 }
 
 .protractor-tool-inner:before{
 	width:1px;
-	height:20px;
+	height:25px;
 	display:inline-block;
 	position:absolute;
 	bottom:0px;
 	left:99px;
-	border-right:1px solid navy;
+	border-right:1px solid #5e5e5e;
 	content:'';
 	padding:0;
 }
@@ -97,6 +100,11 @@ h1{
 
 .set-rotation input{
 	width:45px;
+}
+
+.set-rotation select{
+	width:100%;
+	margin-top:5px;
 }
 
 .set-rotation label{
@@ -139,29 +147,50 @@ h1{
 }
 
 .protractor-slider-knob{
+	box-sizing:border-box;
 	width: 30px;
 	height: 30px;
 	border-radius:30px;
 	position: absolute;
 	top: -13px;
-	margin-left: -15px;
+	margin-left:0px;
 	z-index: 200;
-	background-color: #85A6AB;
 	cursor:pointer;
-	background-color: #E8F8FA;
 	border: 1px solid #6e8a9e;
 	box-shadow: inset 0px 0px 7px #fff;
+	background: #f4f4f4; /* Old browsers */
+	background: -moz-linear-gradient(top, #f4f4f4 20%, #74b7cc 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,#f4f4f4), color-stop(100%,#74b7cc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #f4f4f4 20%,#74b7cc 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #f4f4f4 20%,#74b7cc 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #f4f4f4 20%,#74b7cc 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #f4f4f4 20%,#74b7cc 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#74b7cc',GradientType=0 ); /* IE6-9 */
 }
 
+
 .protractor-slider{
+	box-sizing:border-box;
 	position: absolute;
-	top: 500px;
-	left:-120px;
-	width: 377px;
-	height: 5px;
+	width:500px;
+	top: 450px;
+	left:-90px;
+	width: 392px;
+	height: 4px;
 	text-align: center;
 	margin: 0 314px;
-	background-color:#ddd;
+	background-color:#bbb;
+	border-top:1px solid #555;
+	border-left:1px solid #555;
+	border-right:1px solid #555;
+	border-bottom:1px solid #fff;
+	border-radius:2px;
+}
+
+.menu input, .protractor-slider input{
+	border:1px solid #ccc;
+	padding:5px;
+	border-radius:3px;
 }
 
 .protractor-angle{

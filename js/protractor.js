@@ -16,6 +16,8 @@ function Protractor(){
 	this.angleDegrees=0;
 	this.angleRadians=0;
 
+	this.updateAngle();
+
 }
 
 Protractor.prototype = {
@@ -34,10 +36,23 @@ Protractor.prototype = {
 	},
 
 	updateAngle: function(){
-		this.angleDegrees = $("#protractor-angle").val();
+		$('#protractor-angle').data('deg', this.angleDegrees);
+		$('#protractor-angle').data('rad', this.angleRadians);
+
 		$('#protractor-slider-knob').css('left',  this.angleDegrees + 'px');
-		$("#protractor-angle-center").html(this.angleDegrees + '&deg;');
-		this.angleRadians=this.angleDegrees*Math.PI/180;
+		this.updateVisibleAngles();
+		this.angleRadians=parseFloat(this.angleDegrees/180).toFixed(2);
+		this.updateCanvas();
+	},
+
+	updateVisibleAngles: function(){
+		if($('#angle-unit').val() == 'rad'){
+			$("#protractor-angle-center").html(this.angleRadians + ' &pi;');
+			$("#protractor-angle").val(this.angleRadians);
+		}else{
+			$("#protractor-angle-center").html(this.angleDegrees + '&deg;');
+			$("#protractor-angle").val(this.angleDegrees);
+		}
 	},
 
 	setInputRotation: function(){
@@ -51,14 +66,49 @@ Protractor.prototype = {
 		var radius = 85;
 		var x= this.canvas.width()/2;
 		var y= this.canvas.height()/2;
-		var startAngle = 0 + 0.5*Math.PI;
-		var endAngle = this.angleRadians + 0.5*Math.PI;
+		var startAngle = 0 + (0.5*Math.PI);
+		var endAngle = (this.angleRadians*Math.PI) + (0.5*Math.PI);
 		var counterClockwise = false;
+
+		this.context.beginPath();
+		this.context.arc(x, y, radius, 0, 365, counterClockwise);
+		this.context.lineWidth = 15;
+		this.context.strokeStyle = '#93A6BA';
+		this.context.stroke();
+
+		this.context.beginPath();
+		this.context.arc(x, y, radius-8, 0, 365, counterClockwise);
+		this.context.lineWidth = 1;
+		this.context.strokeStyle = '#525B66';
+		this.context.stroke();
+
+		this.context.beginPath();
+		this.context.arc(x, y, radius+8, 0, 365, counterClockwise);
+		this.context.lineWidth = 1;
+		this.context.strokeStyle = '#525B66';
+
 		this.context.beginPath();
 		this.context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
 		this.context.lineWidth = 15;
 		this.context.strokeStyle = 'orange';
 		this.context.stroke();
+
+		this.context.beginPath();
+		this.context.arc(x, y, radius-8, startAngle, endAngle, counterClockwise);
+		this.context.lineWidth = 1;
+		this.context.strokeStyle = 'red';
+		this.context.stroke();
+
+		this.context.beginPath();
+		this.context.arc(x, y, radius+8, startAngle, endAngle, counterClockwise);
+		this.context.lineWidth = 1;
+		this.context.strokeStyle = 'red';
+		this.context.stroke();
+	},
+
+	updateCanvas: function(){
+		this.context.clearRect(0, 0, 300, 300);
+		this.drawArc();
 	}
 }
 
@@ -66,16 +116,12 @@ Protractor.prototype = {
  * Object for managing the canvas
  */
 function CanvasController($scope){
-	var canv=$("#main-canvas");
-	this.canvas=canv;
-	this.context=this.canvas[0].getContext('2d');
 
 	var cc=this;
 	$(document).ready( function(){
 		cc.protractor = new Protractor(cc);
 		cc.mouseX=0;
 		cc.mouseY=0;
-		cc.updateCanvas();
 		$scope.protractor=this.protractor;
 		$scope.$apply();
 		cc.setEvents();
@@ -83,14 +129,6 @@ function CanvasController($scope){
 }
 
 CanvasController.prototype={
-
-	updateCanvas: function(){
-		console.log(this.protractor.angleDegrees);
-		console.log(this.protractor.angleRadians);
-		this.context.clearRect(0, 0, 700, 500);
-		this.protractor.context.clearRect(0, 0, 300, 300);
-		this.protractor.drawArc();
-	},
 
 	setEvents: function(){
 		var cc=this;
@@ -111,14 +149,15 @@ CanvasController.prototype={
 			prot.updateAngle();
 		});
 		$('#protractor-slider-knob').draggable({ 
-			axis: 'x', 
-			containment: "parent",
+			axis: 'x',
+			containment: 'parent', 
 			drag: function(){
-				var degrees = parseInt($(this).css('left').replace('px',''));
-				$("#protractor-angle").val(degrees);
+				prot.angleDegrees = parseInt($(this).css('left').replace('px',''));
 				prot.updateAngle();
-				cc.updateCanvas();
 			}
+		});
+		$('#angle-unit').change(function(){
+			prot.updateVisibleAngles();
 		});
 	},
 
