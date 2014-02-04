@@ -150,7 +150,7 @@ h1{
 	box-sizing:border-box;
 	width: 30px;
 	height: 30px;
-	border-radius:30px;
+	border-radius:50%;
 	position: absolute;
 	top: -13px;
 	margin-left:0px;
@@ -167,7 +167,6 @@ h1{
 	background: linear-gradient(to bottom, #f4f4f4 20%,#74b7cc 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#74b7cc',GradientType=0 ); /* IE6-9 */
 }
-
 
 .protractor-slider{
 	box-sizing:border-box;

@@ -36,6 +36,8 @@ Protractor.prototype = {
 	},
 
 	updateAngle: function(){
+		this.constrainAngle();
+
 		$('#protractor-angle').data('deg', this.angleDegrees);
 		$('#protractor-angle').data('rad', this.angleRadians);
 
@@ -43,6 +45,14 @@ Protractor.prototype = {
 		this.updateVisibleAngles();
 		this.angleRadians=parseFloat(this.angleDegrees/180).toFixed(2);
 		this.updateCanvas();
+	},
+
+	constrainAngle: function(){
+		if(this.angleDegrees < 0){
+			this.angleDegrees = 0;
+		}else if(this.angleDegrees > 360){
+			this.angleDegrees = 360;
+		}
 	},
 
 	updateVisibleAngles: function(){
@@ -113,7 +123,7 @@ Protractor.prototype = {
 }
 
 /*
- * Object for managing the canvas
+ * Object for managing the main canvas
  */
 function CanvasController($scope){
 
